@@ -4,7 +4,11 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const SpotifyWebApi = require('spotify-web-api-node');
 
+const PORT = process.env.PORT || 3001
+// const PORT = 3001;
+
 const app = express();
+
 app.use(cors());
 app.use(bodyParser.json());
 
@@ -41,9 +45,15 @@ app.post('/login', (req, res) => {
       refreshToken: data.body.refresh_token,
       expiresIn: data.body.expires_in
     })
-  }).catch(() => {
+  }).catch((err) => {
     res.sendStatus(400)
   })
 })
 
-app.listen(5000)
+app.get('/', (req, res) => {
+  res.json({
+    "welcome": "Hello"
+  })
+})
+
+app.listen(PORT);
